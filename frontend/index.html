@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Todo App</title>
+</head>
+<body>
+  <h1>Het Todo App</h1>
+
+  <input type="text" id="task" placeholder="Enter Task">
+  <button onclick="addTask()">Add</button>
+
+  <ul id="list"></ul>
+
+<script>
+
+async function loadTasks() {
+  let res = await fetch http://34.58.7.198:5000/todos
+  let data = await res.json();
+
+  let list = document.getElementById("list");
+  list.innerHTML = "";
+
+  data.forEach(task => {
+    list.innerHTML += "<li>" + task + "</li>";
+  });
+}
+
+async function addTask() {
+
+  let task = document.getElementById("task").value;
+
+  await fetch("http://YOUR_SERVER_IP:5000/todos", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ task })
+  });
+
+  loadTasks();
+}
+
+loadTasks();
+
+</script>
+
+</body>
+</html>
